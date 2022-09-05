@@ -20,12 +20,16 @@ public class Aula {
     private Profesor profesor;
     private String materia;
 
-    ArrayList<Alumno> alumnos = new ArrayList<>();
+    private ArrayList<Alumno> alumnos = new ArrayList<>();
     private int numeroDeAula;
 
     protected int numMaxAlumnos;
 
-    public Aula(String materia,int numeroDeAula, int numMaxAlumnos) {
+    public ArrayList<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public Aula(String materia, int numeroDeAula, int numMaxAlumnos) {
         profesor = new Profesor();
 
 
@@ -48,12 +52,32 @@ public class Aula {
     }
 
 
-    public boolean hayClases(){
-        boolean hayClases = true;
-        if(!profesor.getMateria().equals(materia) || porcentajeAsistencia(alumnos) < 50 || !profesor.asistencia()){
-            hayClases = false;
+    public boolean cumplirCondiciones() {
+        boolean condiciones = true;
+        if (!profesor.getMateria().equals(materia) || porcentajeAsistencia(alumnos) < 50 || !profesor.asistencia()) {
+            condiciones = false;
         }
+        return condiciones;
+    }
 
-        return hayClases;}
+    public static String calificarAlumnos(ArrayList<Alumno> alumnos) {
+        int masculinosAprobados = 0;
+        int femeninasAprobadas = 0;
+        for (int i = 0; i < alumnos.size(); i++) {
+            if (alumnos.get(i).getCalificacion() >= 5 && alumnos.get(i).getSexo().equals("masculino")) {
+                masculinosAprobados++;
+            } else if (alumnos.get(i).getCalificacion() >= 5 && alumnos.get(i).getSexo().equals("femenino")) {
+                femeninasAprobadas++;
+            }
+        }
+        return "Aprobaron " + masculinosAprobados + " hombres" + "\nAprobaron " + femeninasAprobadas + " mujeres";
+    }
 
+    public void hayClases(ArrayList<Alumno> alumnos) {
+        if (cumplirCondiciones()){
+            System.out.println(calificarAlumnos(alumnos));
+        }else {
+            System.out.println("No se cumplieron las condiciones para dar clases");
+        }
+    }
 }

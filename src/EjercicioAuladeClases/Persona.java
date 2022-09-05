@@ -10,7 +10,7 @@ public abstract class Persona {
 
     public Persona() {
         int aux;
-        aux = MetodosSueltos.aleatorio(0,1);
+        aux = MetodosSueltos.aleatorio(1,2);
         if(aux == 1){
             sexo = "masculino";
             nombre = NOMBRES_MASCULINOS[MetodosSueltos.aleatorio(0,4)];
